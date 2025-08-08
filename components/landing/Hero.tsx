@@ -47,7 +47,7 @@ export default function Hero() {
                 className="inline-block transform hover:scale-105 transition-transform duration-300"
               >
                 <Image
-                  src="/images/download-on-the-app-store-badge.png"
+                  src="/images/download.svg"
                   alt="Download on the App Store"
                   width={180}
                   height={60}

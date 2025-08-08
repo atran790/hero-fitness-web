@@ -32,7 +32,7 @@ export default function Navigation() {
             className="transform hover:scale-105 transition-transform duration-300"
           >
             <Image
-              src="/images/download-on-the-app-store-badge.png"
+              src="/images/download.svg"
               alt="Download on the App Store"
               width={120}
               height={40}
