@@ -52,6 +52,7 @@ export const viewport = {
   initialScale: 1,
   maximumScale: 1,
   themeColor: '#FDF5EB',
+  colorScheme: 'light only',
 };
 
 export default function RootLayout({
@@ -60,7 +61,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="light">
+      <head>
+        <meta name="color-scheme" content="light only" />
+        <meta name="supported-color-schemes" content="light" />
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            :root { 
+              color-scheme: light only !important;
+            }
+            @media (prefers-color-scheme: dark) {
+              :root { 
+                color-scheme: light !important;
+              }
+              html, body {
+                background-color: #FDF5EB !important;
+                color: #111827 !important;
+              }
+            }
+          `
+        }} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${anton.variable} antialiased bg-hero-buttermilk`}
       >

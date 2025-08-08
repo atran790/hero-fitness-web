@@ -1,7 +1,37 @@
 @import "tailwindcss";
 
+/* Force light mode and prevent iOS dark mode interference */
+:root {
+  color-scheme: light only;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  color-scheme: light only !important;
+  background-color: #ffffff !important;
+}
+
+/* Prevent dark mode in all media queries */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light;
+  }
+  
+  html {
+    color-scheme: light !important;
+    background-color: #ffffff !important;
+  }
+  
+  body {
+    background-color: #FDF5EB !important;
+    color: #111827 !important;
+  }
+}
+
 @layer base {
   :root {
+    color-scheme: light only;
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --primary: 265 89% 78%;
@@ -17,20 +47,8 @@
     --radius: 0.5rem;
   }
 
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --primary: 265 89% 78%;
-    --primary-foreground: 240 10% 3.9%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --border: 240 3.7% 15.9%;
-    --ring: 265 89% 78%;
-  }
+  /* Remove dark mode styles completely */
+  /* Site is light mode only */
 
   * {
     @apply border-border;

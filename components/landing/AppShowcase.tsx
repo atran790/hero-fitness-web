@@ -66,7 +66,7 @@ export default function AppShowcase() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-anton font-black uppercase text-white mb-4 tracking-tight leading-[0.9]">
@@ -82,10 +82,14 @@ export default function AppShowcase() {
           {screens.map((screen, index) => (
             <motion.div
               key={screen.id}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="group"
+              transition={{ 
+                duration: 0.5, 
+                delay: index * 0.05,
+                ease: "easeOut"
+              }}
+              className="group will-change-transform"
             >
               <div className="relative">
                 {/* Phone mockup */}
