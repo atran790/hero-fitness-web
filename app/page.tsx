@@ -26,7 +26,7 @@ export default function Home() {
           
           {/* Placeholder Message */}
           <p className="text-gray-500 dark:text-gray-400 mt-8">
-            We're crafting an amazing experience. Check back soon!
+            We&apos;re crafting an amazing experience. Check back soon!
           </p>
         </div>
       </div>
