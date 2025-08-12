@@ -12,8 +12,8 @@ export async function GET() {
     if (hasApiKey && hasBaseId) {
       try {
         const base = new Airtable({
-          apiKey: process.env.AIRTABLE_API_KEY || '',
-        }).base(process.env.AIRTABLE_BASE_ID || '')
+          apiKey: (process.env.AIRTABLE_API_KEY || '').trim(),
+        }).base((process.env.AIRTABLE_BASE_ID || '').trim())
         
         // Try to list records (read-only test)
         const records = await base('Waitlist').select({
