@@ -298,7 +298,7 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
                     <p className="text-gray-600 mb-6">
                       {hasShared 
                         ? "Thanks for spreading the word! You've been moved to the priority list."
-                        : "Your spot is secured! But there&apos;s a way to skip ahead..."}
+                        : "Your spot is secured! But there's a way to skip ahead..."}
                     </p>
                     
                     {!hasShared && (
