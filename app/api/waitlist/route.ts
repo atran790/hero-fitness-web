@@ -26,9 +26,7 @@ export async function POST(request: NextRequest) {
           fields: {
             'Phone': phoneNumber,
             'Platform': platform === 'android' ? 'Android' : 'iOS',
-            'Joined': new Date().toISOString(),
-            'Shared': false,
-            'Source': 'Website'
+            'Timestamp': new Date().toISOString()
           }
         }
       ])

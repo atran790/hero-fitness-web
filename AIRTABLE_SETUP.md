@@ -16,11 +16,11 @@ Delete all default fields and create these exact fields:
 
 | Field Name | Field Type | Notes |
 |------------|------------|-------|
-| **Phone** | Phone number | Primary field |
+| **Phone** | Single line text | Primary field |
 | **Platform** | Single select | Options: iOS, Android |
-| **Joined** | Date & time | Include time, use GMT |
+| **Timestamp** | Date & time | Include time, use GMT |
 | **Shared** | Checkbox | Default unchecked |
-| **Source** | Single line text | Default "Website" |
+| **Shared At** | Date & time | When user shared (optional) |
 
 ### Step 4: Get Your API Credentials
 
@@ -85,8 +85,8 @@ Or add manually in Vercel Dashboard → Settings → Environment Variables
 - Check spelling in your Airtable base
 
 ### "Field 'Phone' cannot accept value"
-- Make sure your field names match exactly (Phone, Platform, Joined, Shared, Source)
-- Field types must match (Phone number, Single select, etc.)
+- Make sure your field names match exactly (Phone, Platform, Timestamp, Shared, Shared At)
+- Field types must match (Single line text for phone, Single select for platform, etc.)
 
 ## Why Airtable?
 
@@ -97,10 +97,27 @@ Or add manually in Vercel Dashboard → Settings → Environment Variables
 ✅ **Free Tier** - 1,200 records free
 ✅ **Export Anytime** - Download as CSV whenever needed
 
+## Tracking Shares
+
+The app automatically tracks when users share the waitlist:
+- When a user clicks "Share & Jump to Front", the `Shared` checkbox is marked
+- The `Shared At` field records when they shared
+- You can create filtered views to see:
+  - Users who shared vs didn't share
+  - Share rate by platform (iOS vs Android)
+  - Time between joining and sharing
+
+### Creating a "Shared Users" View:
+1. In Airtable, click **"Create"** → **"Grid view"**
+2. Name it "Shared Users"
+3. Add a filter: `Shared` = ✓
+4. Sort by `Shared At` (newest first)
+
 ## Next Steps
 
 1. Set up email notifications (Airtable Automations)
 2. Create views (iOS only, Android only, Shared, etc.)
 3. Add more fields (email, referral source, etc.)
+4. Set up automations for users who share (special rewards, priority access)
 
-Your waitlist is now powered by Airtable! 🎉
+Your waitlist is now powered by Airtable with share tracking! 🎉

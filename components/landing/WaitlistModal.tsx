@@ -16,6 +16,7 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
   const [error, setError] = useState('')
   const [waitlistCount, setWaitlistCount] = useState(2847)
   const [hasShared, setHasShared] = useState(false)
+  const [recordId, setRecordId] = useState<string | null>(null)
 
   // Reset state when modal closes
   useEffect(() => {
@@ -25,6 +26,7 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
         setIsSubmitted(false)
         setError('')
         setHasShared(false)
+        setRecordId(null)
       }, 300) // Wait for animation to complete
     }
   }, [isOpen])
@@ -100,6 +102,11 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
         throw new Error('Failed to join waitlist')
       }
 
+      const data = await response.json()
+      if (data.recordId) {
+        setRecordId(data.recordId)
+      }
+
       // Show success state
       setIsSubmitted(true)
     } catch (err) {
@@ -111,6 +118,19 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
   const handleShare = async () => {
     const shareText = "I just joined the Hero Fitness AI waitlist! 💪 Transform yourself with AI-powered fitness. Join me for exclusive early access:"
     const shareUrl = window.location.href
+    
+    // Track the share in Airtable
+    if (recordId) {
+      try {
+        await fetch('/api/waitlist/track-share', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ recordId }),
+        })
+      } catch (err) {
+        console.error('Failed to track share:', err)
+      }
+    }
     
     if (navigator.share) {
       try {
