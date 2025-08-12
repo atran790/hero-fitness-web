@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Airtable from 'airtable'
 
-const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY || 'YOUR_AIRTABLE_API_KEY'
-const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID || 'YOUR_AIRTABLE_BASE_ID'
-const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME || 'Waitlist'
-
 // Initialize Airtable
-const base = new Airtable({ apiKey: AIRTABLE_API_KEY }).base(AIRTABLE_BASE_ID)
+const base = new Airtable({
+  apiKey: process.env.AIRTABLE_API_KEY || '',
+}).base(process.env.AIRTABLE_BASE_ID || '')
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,8 +17,17 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Check if Airtable is configured
+    if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
+      console.error('Airtable not configured. Please set AIRTABLE_API_KEY and AIRTABLE_BASE_ID')
+      return NextResponse.json(
+        { error: 'Share tracking service not configured' },
+        { status: 503 }
+      )
+    }
+
     // Update the record to mark it as shared
-    await base(AIRTABLE_TABLE_NAME).update(recordId, {
+    await base('Waitlist').update(recordId, {
       "Shared": true,
       "Shared At": new Date().toISOString()
     })
