@@ -133,7 +133,7 @@ export default function Features() {
           <p className="text-gray-600 mb-8 text-lg">
             Discover how fitness doesn&apos;t have to be extreme to be effective.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
             <button 
               onClick={() => {
                 setPlatform('ios')
@@ -146,7 +146,7 @@ export default function Features() {
                 alt="Download on the App Store"
                 width={180}
                 height={60}
-                className="h-14 w-auto"
+                className="h-14 w-[180px] object-contain flex-shrink-0"
                 priority
               />
             </button>
@@ -162,7 +162,7 @@ export default function Features() {
                 alt="Get it on Google Play"
                 width={180}
                 height={60}
-                className="h-14 w-auto"
+                className="h-14 w-[180px] object-contain flex-shrink-0"
                 priority
               />
             </button>

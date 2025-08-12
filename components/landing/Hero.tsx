@@ -43,7 +43,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-3 justify-center items-center"
             >
               <button 
                 onClick={() => {
@@ -57,7 +57,7 @@ export default function Hero() {
                   alt="Download on the App Store"
                   width={180}
                   height={60}
-                  className="h-14 w-auto"
+                  className="h-14 w-[180px] object-contain flex-shrink-0"
                   priority
                 />
               </button>
@@ -73,7 +73,7 @@ export default function Hero() {
                   alt="Get it on Google Play"
                   width={180}
                   height={60}
-                  className="h-14 w-auto"
+                  className="h-14 w-[180px] object-contain flex-shrink-0"
                   priority
                 />
               </button>

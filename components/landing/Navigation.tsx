@@ -31,7 +31,7 @@ export default function Navigation() {
             </div>
 
             {/* CTA Buttons with App Store Badges */}
-            <div className="flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-2">
               <button
                 onClick={() => {
                   setPlatform('ios')
