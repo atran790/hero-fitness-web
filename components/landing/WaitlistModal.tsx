@@ -122,7 +122,7 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
         setHasShared(true)
         // Close after successful share
         setTimeout(() => onClose(), 1500)
-      } catch (err) {
+      } catch {
         console.log('Share cancelled or failed')
       }
     } else {
@@ -184,7 +184,7 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
                       </h2>
                       
                       <p className="text-gray-600 leading-relaxed">
-                        We know fitness can feel overwhelming. That's why we're building something different—gentle, sustainable, and made for real life.
+                        We know fitness can feel overwhelming. That&apos;s why we&apos;re building something different—gentle, sustainable, and made for real life.
                       </p>
                     </div>
                     
@@ -247,7 +247,7 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
                       </button>
                       
                       <p className="text-xs text-gray-500 text-center">
-                        We'll text you once when we launch. Your journey to gentle fitness awaits.
+                        We&apos;ll text you once when we launch. Your journey to gentle fitness awaits.
                       </p>
                     </form>
                   </>
@@ -278,7 +278,7 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
                     <p className="text-gray-600 mb-6">
                       {hasShared 
                         ? "Thanks for spreading the word! You've been moved to the priority list."
-                        : "Your spot is secured! But there's a way to skip ahead..."}
+                        : "Your spot is secured! But there&apos;s a way to skip ahead..."}
                     </p>
                     
                     {!hasShared && (
