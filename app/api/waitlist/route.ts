@@ -40,14 +40,8 @@ export async function POST(request: NextRequest) {
         success: true,
         recordId: record[0].id
       })
-    } catch (airtableError: any) {
+    } catch (airtableError) {
       console.error('Airtable error:', airtableError)
-      
-      // Check for specific Airtable errors
-      if (airtableError.error === 'INVALID_REQUEST_UNKNOWN') {
-        console.error('Check that your Airtable table name is "Waitlist" and fields match')
-      }
-      
       throw airtableError
     }
   } catch (error) {

@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup-hooks": "chmod +x .git/hooks/pre-commit 2>/dev/null || echo 'Pre-commit hook already set up'"
   },
   "dependencies": {
     "@vercel/kv": "^3.0.0",
