@@ -2,9 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { Sparkles, Calendar, Camera, Clock, Moon, Heart } from 'lucide-react'
+import WaitlistModal from './WaitlistModal'
 
 const features = [
   {
@@ -53,6 +53,8 @@ const features = [
 
 export default function Features() {
   const [isVisible, setIsVisible] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [platform, setPlatform] = useState<'ios' | 'android'>('ios')
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -131,21 +133,45 @@ export default function Features() {
           <p className="text-gray-600 mb-8 text-lg">
             Discover how fitness doesn&apos;t have to be extreme to be effective.
           </p>
-          <Link 
-            href="#"
-            className="inline-block transform hover:scale-105 transition-transform duration-300"
-          >
-            <Image
-              src="/images/download.svg"
-              alt="Download on the App Store"
-              width={180}
-              height={60}
-              className="h-14 w-auto"
-              priority
-            />
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button 
+              onClick={() => {
+                setPlatform('ios')
+                setIsModalOpen(true)
+              }}
+              className="inline-block transform hover:scale-105 transition-transform duration-300"
+            >
+              <Image
+                src="/images/download_ios.svg"
+                alt="Download on the App Store"
+                width={180}
+                height={60}
+                className="h-14 w-auto"
+                priority
+              />
+            </button>
+            <button 
+              onClick={() => {
+                setPlatform('android')
+                setIsModalOpen(true)
+              }}
+              className="inline-block transform hover:scale-105 transition-transform duration-300"
+            >
+              <Image
+                src="/images/download_android.png"
+                alt="Get it on Google Play"
+                width={180}
+                height={60}
+                className="h-14 w-auto"
+                priority
+              />
+            </button>
+          </div>
         </motion.div>
       </div>
+      
+      {/* Waitlist Modal */}
+      <WaitlistModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} platform={platform} />
     </section>
   )
 }

@@ -1,10 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import WaitlistModal from './WaitlistModal'
 
 export default function Navigation() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [platform, setPlatform] = useState<'ios' | 'android'>('ios')
   return (
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
@@ -26,22 +29,46 @@ export default function Navigation() {
             <span className="text-gray-900 font-anton font-black uppercase text-lg tracking-tight">HERO FITNESS AI</span>
           </div>
 
-          {/* CTA Button with App Store Badge */}
-          <Link
-            href="#"
-            className="transform hover:scale-105 transition-transform duration-300"
-          >
-            <Image
-              src="/images/download.svg"
-              alt="Download on the App Store"
-              width={120}
-              height={40}
-              className="h-10 w-auto"
-              priority
-            />
-          </Link>
+          {/* CTA Buttons with App Store Badges */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                setPlatform('ios')
+                setIsModalOpen(true)
+              }}
+              className="transform hover:scale-105 transition-transform duration-300"
+            >
+              <Image
+                src="/images/download_ios.svg"
+                alt="Download on the App Store"
+                width={120}
+                height={40}
+                className="h-10 w-auto"
+                priority
+              />
+            </button>
+            <button
+              onClick={() => {
+                setPlatform('android')
+                setIsModalOpen(true)
+              }}
+              className="transform hover:scale-105 transition-transform duration-300"
+            >
+              <Image
+                src="/images/download_android.png"
+                alt="Get it on Google Play"
+                width={120}
+                height={40}
+                className="h-10 w-auto"
+                priority
+              />
+            </button>
+          </div>
         </div>
       </div>
+      
+      {/* Waitlist Modal */}
+      <WaitlistModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} platform={platform} />
     </motion.nav>
   )
 }

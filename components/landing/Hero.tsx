@@ -1,10 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import WaitlistModal from './WaitlistModal'
 
 export default function Hero() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [platform, setPlatform] = useState<'ios' | 'android'>('ios')
   return (
     <section className="relative min-h-screen bg-gradient-to-b from-white via-gray-50/50 to-white pt-32 pb-20 overflow-hidden">
       {/* Subtle background elements */}
@@ -35,26 +38,45 @@ export default function Hero() {
               See your future self, get personalized workouts, and celebrate every step of your wellness journey.
             </p>
 
-            {/* CTA Button with App Store Badge */}
+            {/* CTA Buttons with App Store Badges */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
             >
-              <Link 
-                href="#"
+              <button 
+                onClick={() => {
+                  setPlatform('ios')
+                  setIsModalOpen(true)
+                }}
                 className="inline-block transform hover:scale-105 transition-transform duration-300"
               >
                 <Image
-                  src="/images/download.svg"
+                  src="/images/download_ios.svg"
                   alt="Download on the App Store"
                   width={180}
                   height={60}
                   className="h-14 w-auto"
                   priority
                 />
-              </Link>
+              </button>
+              <button 
+                onClick={() => {
+                  setPlatform('android')
+                  setIsModalOpen(true)
+                }}
+                className="inline-block transform hover:scale-105 transition-transform duration-300"
+              >
+                <Image
+                  src="/images/download_android.png"
+                  alt="Get it on Google Play"
+                  width={180}
+                  height={60}
+                  className="h-14 w-auto"
+                  priority
+                />
+              </button>
             </motion.div>
           </motion.div>
 
@@ -121,6 +143,9 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
+      
+      {/* Waitlist Modal */}
+      <WaitlistModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} platform={platform} />
     </section>
   )
 }
