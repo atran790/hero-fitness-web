@@ -137,12 +137,12 @@ const faqs: FAQItem[] = [
   {
     category: "Progress",
     question: "I'm not seeing results. Should I quit?",
-    answer: "Please don't give up! Real, sustainable change takes time - usually 6-8 weeks to feel different, and 12 weeks for visible changes. Are you sleeping enough? Eating nourishing foods? Managing stress? Fitness is just one piece of wellness. Also, progress isn't always visible - you might be getting stronger, building endurance, or improving your mental health. Every workout is a victory, even when you can't see it yet. You're exactly where you need to be."
+    answer: "Please don&apos;t give up! Real, sustainable change takes time - usually 6-8 weeks to feel different, and 12 weeks for visible changes. Are you sleeping enough? Eating nourishing foods? Managing stress? Fitness is just one piece of wellness. Also, progress isn&apos;t always visible - you might be getting stronger, building endurance, or improving your mental health. Every workout is a victory, even when you can&apos;t see it yet. You&apos;re exactly where you need to be."
   },
   {
     category: "Progress",
     question: "Can I share my progress with others?",
-    answer: "Currently, Hero Fitness AI is designed as your personal, private fitness companion. We don't have social sharing features because we believe your journey is yours alone - free from comparison or judgment. Celebrate your wins with loved ones in person, but remember: you're not competing with anyone but yesterday's you."
+    answer: "Currently, Hero Fitness AI is designed as your personal, private fitness companion. We don&apos;t have social sharing features because we believe your journey is yours alone - free from comparison or judgment. Celebrate your wins with loved ones in person, but remember: you&apos;re not competing with anyone but yesterday&apos;s you."
   }
 ]
 
@@ -168,16 +168,16 @@ export default function Support() {
   const categories = [...new Set(faqs.map(faq => faq.category))]
 
   return (
-    <div className="min-h-screen bg-hero-buttermilk py-20">
+    <div className="min-h-screen bg-[#FDF5EB] py-20">
       <div className="container mx-auto px-6 max-w-4xl">
-        <Link href="/" className="inline-flex items-center text-hero-orange hover:text-hero-tangerine mb-8 transition-colors font-semibold">
+        <Link href="/" className="inline-flex items-center text-[#F58B44] hover:text-[#F06E1D] mb-8 transition-colors font-semibold">
           ← Back to Home
         </Link>
         
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-anton uppercase text-gray-900 mb-4">We're Here to Help</h1>
+          <h1 className="text-4xl md:text-5xl font-anton uppercase text-gray-900 mb-4">We&apos;re Here to Help</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Your wellness journey matters to us. Find answers to common questions below, or reach out directly - we're real people who genuinely care about your success.
+            Your wellness journey matters to us. Find answers to common questions below, or reach out directly - we&apos;re real people who genuinely care about your success.
           </p>
         </div>
 
@@ -186,13 +186,13 @@ export default function Support() {
           {categories.map((category) => (
             <div key={category} className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
               <h2 className="text-2xl font-anton uppercase text-gray-900 mb-6 flex items-center gap-2">
-                <Heart className="w-6 h-6 text-hero-orange" />
+                <Heart className="w-6 h-6 text-[#F58B44]" />
                 {category}
               </h2>
               <div>
                 {faqs
                   .filter(faq => faq.category === category)
-                  .map((item, index) => {
+                  .map((item) => {
                     const globalIndex = faqs.indexOf(item)
                     return (
                       <FAQAccordion
@@ -213,7 +213,7 @@ export default function Support() {
           <MessageCircle className="w-16 h-16 mx-auto mb-4 text-white" />
           <h2 className="text-3xl font-anton uppercase mb-4 text-white">Still Need Help?</h2>
           <p className="text-xl mb-8 text-white/95 max-w-md mx-auto">
-            We're real people who understand that fitness journeys aren't always straightforward. Whatever you're facing, we're here to support you.
+            We&apos;re real people who understand that fitness journeys aren&apos;t always straightforward. Whatever you&apos;re facing, we&apos;re here to support you.
           </p>
           <a
             href="mailto:hello@usehero.fit"
@@ -223,14 +223,14 @@ export default function Support() {
             Email Support
           </a>
           <p className="mt-6 text-sm text-white/90">
-            We typically respond within 24 hours, because your journey can't wait.
+            We typically respond within 24 hours, because your journey can&apos;t wait.
           </p>
         </div>
 
         {/* Bottom message */}
         <div className="text-center mt-12">
           <p className="text-gray-500 italic">
-            Remember: Every question is valid. Every concern matters. You're not alone in this.
+            Remember: Every question is valid. Every concern matters. You&apos;re not alone in this.
           </p>
         </div>
       </div>
