@@ -30,6 +30,10 @@ export default function Footer() {
             <p className="flex flex-wrap justify-center items-center gap-2">
               © {currentYear} Hero Fitness AI. All rights reserved.
               <span className="text-gray-300">•</span>
+              <Link href="/support" className="text-gray-600 hover:text-black transition-colors duration-200">
+                Support
+              </Link>
+              <span className="text-gray-300">•</span>
               <Link href="/privacy" className="text-gray-600 hover:text-black transition-colors duration-200">
                 Privacy Policy
               </Link>
