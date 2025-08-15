@@ -17,6 +17,8 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
   const [waitlistCount, setWaitlistCount] = useState(2847)
   const [hasShared, setHasShared] = useState(false)
   const [recordId, setRecordId] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSharing, setIsSharing] = useState(false)
 
   // Reset state when modal closes
   useEffect(() => {
@@ -27,6 +29,8 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
         setError('')
         setHasShared(false)
         setRecordId(null)
+        setIsSubmitting(false)
+        setIsSharing(false)
       }, 300) // Wait for animation to complete
     }
   }, [isOpen])
@@ -83,10 +87,15 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    if (isSubmitting) return // Prevent double submission
+    
     if (!validatePhoneNumber(phoneNumber)) {
       setError('Please enter a valid 10-digit phone number')
       return
     }
+
+    setIsSubmitting(true)
+    setError('')
 
     try {
       // Send to backend API
@@ -112,10 +121,14 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
     } catch (err) {
       console.error('Submission error:', err)
       setError('Something went wrong. Please try again.')
+      setIsSubmitting(false)
     }
   }
 
   const handleShare = async () => {
+    if (isSharing) return // Prevent double sharing
+    
+    setIsSharing(true)
     const shareText = "I just joined the Hero Fitness AI waitlist! 💪 Transform yourself with AI-powered fitness. Join me for exclusive early access:"
     const shareUrl = window.location.href
     
@@ -144,6 +157,7 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
         setTimeout(() => onClose(), 1500)
       } catch {
         console.log('Share cancelled or failed')
+        setIsSharing(false)
       }
     } else {
       // Fallback: Copy to clipboard
@@ -162,23 +176,25 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/50 z-[100]"
           />
           
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: "spring", damping: 25, stiffness: 500 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md z-[101]"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md z-[101] transform-gpu"
+            style={{ willChange: 'transform, opacity' }}
           >
             <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
               {/* Close button */}
               <button
                 onClick={onClose}
-                className="absolute right-4 top-4 p-2 rounded-full hover:bg-gray-100 transition-colors z-10"
+                className="absolute right-4 top-4 p-2 rounded-full hover:bg-gray-100 transition-colors z-10 cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5 text-gray-500" />
@@ -191,9 +207,9 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
                     {/* Header */}
                     <div className="text-center mb-6">
                       <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.1, type: "spring" }}
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
                         className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-100 to-amber-100 rounded-2xl mb-4"
                       >
                         <Sparkles className="w-8 h-8 text-orange-500" />
@@ -261,9 +277,10 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
                       
                       <button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold py-4 rounded-xl hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200"
+                        disabled={isSubmitting}
+                        className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold py-4 rounded-xl hover:shadow-lg transform hover:scale-[1.02] transition-transform duration-200 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                       >
-                        Reserve My Spot Now
+                        {isSubmitting ? 'Joining...' : 'Reserve My Spot Now'}
                       </button>
                       
                       <p className="text-xs text-gray-500 text-center">
@@ -279,9 +296,9 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
                     className="text-center py-6"
                   >
                     <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", damping: 15 }}
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                       className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4"
                     >
                       {hasShared ? (
@@ -319,15 +336,16 @@ export default function WaitlistModal({ isOpen, onClose, platform = 'ios' }: Wai
                         
                         <button
                           onClick={handleShare}
-                          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 rounded-xl hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-2"
+                          disabled={isSharing}
+                          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 rounded-xl hover:shadow-lg transform hover:scale-[1.02] transition-transform duration-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                         >
                           <Share2 className="w-5 h-5" />
-                          Share & Jump to Front
+                          {isSharing ? 'Sharing...' : 'Share & Jump to Front'}
                         </button>
                         
                         <button
                           onClick={onClose}
-                          className="mt-3 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                          className="mt-3 text-sm text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
                         >
                           Maybe later
                         </button>

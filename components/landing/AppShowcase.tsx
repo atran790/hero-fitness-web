@@ -58,8 +58,8 @@ export default function AppShowcase() {
     <section ref={sectionRef} className="py-24 bg-[#101340] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-0 w-96 h-96 bg-gradient-to-br from-orange-200/20 to-amber-200/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-gradient-to-br from-orange-200/10 to-amber-200/10 rounded-full blur-xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200/10 to-purple-200/10 rounded-full blur-xl"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">

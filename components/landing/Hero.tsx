@@ -10,10 +10,10 @@ export default function Hero() {
   const [platform, setPlatform] = useState<'ios' | 'android'>('ios')
   return (
     <section className="relative min-h-screen bg-gradient-to-b from-white via-gray-50/50 to-white pt-32 pb-20 overflow-hidden">
-      {/* Subtle background elements */}
+      {/* Subtle background elements - lighter gradients for performance */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 right-0 w-96 h-96 bg-gradient-to-br from-orange-100/40 to-amber-100/40 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-gradient-to-br from-purple-100/40 to-pink-100/40 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 right-0 w-96 h-96 bg-gradient-to-br from-orange-100/30 to-amber-100/30 rounded-full blur-xl"></div>
+        <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-gradient-to-br from-purple-100/30 to-pink-100/30 rounded-full blur-xl"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -23,7 +23,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex-1 max-w-2xl text-center lg:text-left"
+            className="flex-1 max-w-2xl text-center lg:text-left lg:ml-[50px]"
           >
             {/* Main Heading */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-anton font-black uppercase text-gray-900 mb-6 leading-[0.9] tracking-tight">
@@ -50,7 +50,7 @@ export default function Hero() {
                   setPlatform('ios')
                   setIsModalOpen(true)
                 }}
-                className="inline-block transform hover:scale-105 transition-transform duration-300"
+                className="inline-block cursor-pointer transform hover:scale-105 transition-transform duration-200"
               >
                 <Image
                   src="/images/download_ios.svg"
@@ -66,7 +66,7 @@ export default function Hero() {
                   setPlatform('android')
                   setIsModalOpen(true)
                 }}
-                className="inline-block transform hover:scale-105 transition-transform duration-300"
+                className="inline-block cursor-pointer transform hover:scale-105 transition-transform duration-200"
               >
                 <Image
                   src="/images/download_android.png"
@@ -90,9 +90,11 @@ export default function Hero() {
             <div className="relative">
               {/* Background iPhone - App Screen */}
               <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="relative z-10"
+                initial={{ y: 10 }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+                className="relative z-10 transform-gpu"
+                style={{ willChange: 'transform' }}
               >
                 <div className="relative w-[256px] h-[520px] bg-gray-900 rounded-[3rem] p-1.5 shadow-2xl">
                   <div className="absolute top-5 left-1/2 transform -translate-x-1/2 w-20 h-4 bg-gray-900 rounded-full"></div>
@@ -110,9 +112,11 @@ export default function Hero() {
 
               {/* Foreground iPhone - Transformation/Woman */}
               <motion.div
-                animate={{ y: [0, -15, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute left-32 top-16 z-20"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                className="absolute left-32 top-16 z-20 transform-gpu"
+                style={{ willChange: 'transform' }}
               >
                 <div className="relative w-[256px] h-[520px] bg-gray-900 rounded-[3rem] p-1.5 shadow-2xl transform rotate-12">
                   <div className="absolute top-5 left-1/2 transform -translate-x-1/2 w-20 h-4 bg-gray-900 rounded-full"></div>
@@ -128,17 +132,9 @@ export default function Hero() {
                 </div>
               </motion.div>
 
-              {/* Decorative elements */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute -left-10 top-10 w-20 h-20 bg-gradient-to-br from-orange-200 to-amber-200 rounded-full blur-2xl opacity-60"
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute -right-10 bottom-10 w-24 h-24 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full blur-2xl opacity-60"
-              />
+              {/* Decorative elements - static gradients */}
+              <div className="absolute -left-10 top-10 w-20 h-20 bg-gradient-to-br from-orange-200/60 to-amber-200/60 rounded-full blur-xl opacity-60" />
+              <div className="absolute -right-10 bottom-10 w-24 h-24 bg-gradient-to-br from-purple-200/60 to-pink-200/60 rounded-full blur-xl opacity-60" />
             </div>
           </motion.div>
         </div>

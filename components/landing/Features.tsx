@@ -109,10 +109,10 @@ export default function Features() {
               initial={{ opacity: 0, y: 30 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="group cursor-pointer"
+              className="group transform-gpu"
+              style={{ willChange: 'transform' }}
             >
-              <div className={`relative ${feature.bgColor} rounded-3xl p-8 h-full transition-all duration-300 hover:shadow-2xl`}>
+              <div className={`relative ${feature.bgColor} rounded-3xl p-8 h-full transition-shadow duration-200 hover:shadow-xl hover:-translate-y-1`}>
                 <div className="relative z-10">
                   <feature.icon className={`w-12 h-12 mb-4 ${feature.textColor}`} />
                   <h3 className={`text-xl font-anton font-black uppercase mb-3 tracking-tight ${feature.textColor}`}>{feature.title}</h3>
@@ -139,7 +139,7 @@ export default function Features() {
                 setPlatform('ios')
                 setIsModalOpen(true)
               }}
-              className="inline-block transform hover:scale-105 transition-transform duration-300"
+              className="inline-block cursor-pointer transform hover:scale-105 transition-transform duration-200"
             >
               <Image
                 src="/images/download_ios.svg"
@@ -155,7 +155,7 @@ export default function Features() {
                 setPlatform('android')
                 setIsModalOpen(true)
               }}
-              className="inline-block transform hover:scale-105 transition-transform duration-300"
+              className="inline-block cursor-pointer transform hover:scale-105 transition-transform duration-200"
             >
               <Image
                 src="/images/download_android.png"

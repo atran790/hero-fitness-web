@@ -74,14 +74,8 @@ function ResetPasswordContent() {
       return
     }
 
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters')
-      return
-    }
-
-    // Check for uppercase, lowercase, and number
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
-      setError('Password must contain uppercase, lowercase, and a number')
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters')
       return
     }
 

@@ -14,7 +14,7 @@ export default function Navigation() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100"
+        className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100"
       >
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
@@ -37,7 +37,7 @@ export default function Navigation() {
                   setPlatform('ios')
                   setIsModalOpen(true)
                 }}
-                className="transform hover:scale-105 transition-transform duration-300"
+                className="cursor-pointer transform hover:scale-105 transition-transform duration-200"
               >
                 <Image
                   src="/images/download_ios.svg"
@@ -53,7 +53,7 @@ export default function Navigation() {
                   setPlatform('android')
                   setIsModalOpen(true)
                 }}
-                className="transform hover:scale-105 transition-transform duration-300"
+                className="cursor-pointer transform hover:scale-105 transition-transform duration-200"
               >
                 <Image
                   src="/images/download_android.png"

@@ -64,6 +64,33 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* Performance optimizations */
+  img, video {
+    content-visibility: auto;
+  }
+
+  /* GPU acceleration for transforms */
+  .transform-gpu {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Optimize button interactions */
+  button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
 }
 
 @layer utilities {
@@ -75,35 +102,7 @@ html {
     mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
   }
 
-  .glassmorphism {
-    @apply backdrop-blur-xl bg-white/5 border border-white/10;
-  }
-
-  .gradient-hero {
-    background: linear-gradient(135deg, 
-      hsl(var(--primary) / 0.3) 0%,
-      transparent 40%),
-      linear-gradient(225deg, 
-      hsl(265 89% 85% / 0.2) 0%,
-      transparent 40%);
-  }
-
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400;
-  }
-
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-  }
-
-  .animate-pulse-slow {
-    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
+  /* Removed heavy blur and animation utilities for performance */
 
   .hide-scrollbar {
     -ms-overflow-style: none;
