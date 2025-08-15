@@ -1,17 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Airtable from 'airtable'
 
-// Initialize Airtable
-const base = new Airtable({
-  apiKey: (process.env.AIRTABLE_API_KEY || '').trim(),
-}).base((process.env.AIRTABLE_BASE_ID || '').trim())
+// Lazy initialize Airtable to avoid build-time errors
+const getAirtableBase = () => {
+  if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
+    return null
+  }
+  return new Airtable({
+    apiKey: process.env.AIRTABLE_API_KEY.trim(),
+  }).base(process.env.AIRTABLE_BASE_ID.trim())
+}
 
 export async function POST(request: NextRequest) {
   try {
     const { phoneNumber, platform } = await request.json()
     
     // Check if Airtable is configured
-    if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
+    const base = getAirtableBase()
+    if (!base) {
       console.error('Airtable not configured. Please set AIRTABLE_API_KEY and AIRTABLE_BASE_ID')
       return NextResponse.json(
         { error: 'Waitlist service not configured' },
@@ -54,7 +60,8 @@ export async function POST(request: NextRequest) {
 // GET endpoint to retrieve waitlist count
 export async function GET() {
   try {
-    if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
+    const base = getAirtableBase()
+    if (!base) {
       return NextResponse.json({ count: 2847 }) // Return default if not configured
     }
     

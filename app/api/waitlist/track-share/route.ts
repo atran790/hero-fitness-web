@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Airtable from 'airtable'
 
-// Initialize Airtable
-const base = new Airtable({
-  apiKey: (process.env.AIRTABLE_API_KEY || '').trim(),
-}).base((process.env.AIRTABLE_BASE_ID || '').trim())
+// Lazy initialize Airtable to avoid build-time errors
+const getAirtableBase = () => {
+  if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
+    return null
+  }
+  return new Airtable({
+    apiKey: process.env.AIRTABLE_API_KEY.trim(),
+  }).base(process.env.AIRTABLE_BASE_ID.trim())
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,7 +23,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if Airtable is configured
-    if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
+    const base = getAirtableBase()
+    if (!base) {
       console.error('Airtable not configured. Please set AIRTABLE_API_KEY and AIRTABLE_BASE_ID')
       return NextResponse.json(
         { error: 'Share tracking service not configured' },
