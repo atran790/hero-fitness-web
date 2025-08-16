@@ -30,7 +30,7 @@ const features = [
   },
   {
     title: "FLEXIBLE SCHEDULE",
-    description: "Choose 1-7 days per week. Even one day makes a difference. 20-45 minute sessions that fit into real life",
+    description: "Choose 1-7 days per week. Even one day makes a difference. 15-60 minute sessions that fit into real life",
     icon: Clock,
     bgColor: "bg-[#01A652]", // Headspace green
     textColor: "text-white",
