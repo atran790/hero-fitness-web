@@ -1,8 +1,16 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const [isDevelopment, setIsDevelopment] = useState(false)
+
+  useEffect(() => {
+    setIsDevelopment(process.env.NODE_ENV === 'development')
+  }, [])
 
   return (
     <footer className="bg-gradient-to-br from-gray-50 to-gray-100 border-t border-gray-200">
@@ -43,6 +51,23 @@ export default function Footer() {
               </Link>
             </p>
           </div>
+
+          {/* Development Links - Only shown in dev mode */}
+          {isDevelopment && (
+            <div className="mt-4 pt-4 border-t border-gray-200 w-full">
+              <div className="text-center">
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Development Links</p>
+                <div className="flex flex-wrap justify-center gap-3 text-xs">
+                  <Link 
+                    href="/reset-password?dev=true" 
+                    className="px-3 py-1 bg-hero-orange/10 text-hero-orange hover:bg-hero-orange/20 rounded-lg transition font-bold"
+                  >
+                    Reset Password (Dev)
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </footer>

@@ -3,6 +3,9 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
+import { motion } from 'framer-motion'
+import { CheckCircle, XCircle, Lock, AlertCircle } from 'lucide-react'
+import Image from 'next/image'
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -18,8 +21,15 @@ function ResetPasswordContent() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [sessionReady, setSessionReady] = useState(false)
+  const [isDevelopment] = useState(() => process.env.NODE_ENV === 'development')
 
   useEffect(() => {
+    // In development mode, allow viewing the page without tokens
+    if (isDevelopment && searchParams.get('dev') === 'true') {
+      setSessionReady(true)
+      return
+    }
+
     // Supabase sends tokens in the hash fragment, not query params
     const hash = window.location.hash
     if (hash) {
@@ -64,7 +74,7 @@ function ResetPasswordContent() {
         setError('Invalid reset link. Please request a new password reset.')
       }
     }
-  }, [searchParams])
+  }, [searchParams, isDevelopment])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -83,6 +93,13 @@ function ResetPasswordContent() {
     setError(null)
 
     try {
+      // In development mode with ?dev=true, just simulate success
+      if (isDevelopment && searchParams.get('dev') === 'true') {
+        await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate API delay
+        setSuccess(true)
+        return
+      }
+
       const { error } = await supabase.auth.updateUser({
         password: password,
       })
@@ -99,130 +116,193 @@ function ResetPasswordContent() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
+      <div className="min-h-screen bg-hero-buttermilk flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="bg-white rounded-hero shadow-2xl p-10 max-w-md w-full"
+        >
           <div className="text-center">
-            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-              <svg className="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Password Updated!</h2>
-            <p className="text-gray-600 mb-6">Your password has been successfully reset.</p>
-            <div className="space-y-3">
-              <p className="text-sm text-gray-600">You can now open the Hero Fitness app and sign in with your new password.</p>
-              <div className="pt-4 space-y-3">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5, type: "spring" }}
+              className="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-hero-green/10 mb-6"
+            >
+              <CheckCircle className="h-10 w-10 text-hero-green" />
+            </motion.div>
+            <h2 className="text-3xl font-anton font-black uppercase text-gray-900 mb-3 tracking-tight">PASSWORD UPDATED!</h2>
+            <p className="text-gray-600 mb-8 text-lg">Your password has been successfully reset.</p>
+            <div className="space-y-4">
+              <p className="text-gray-600">You can now open the HERO FITNESS app and sign in with your new password.</p>
+              <div className="pt-4">
                 <a
                   href="https://apps.apple.com/app/hero-fitness-ai/id6738900681"
-                  className="block w-full bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition"
+                  className="block w-full bg-hero-orange text-white px-6 py-4 rounded-2xl font-bold uppercase tracking-wide hover:bg-hero-tangerine transform hover:scale-105 transition-all duration-200"
                 >
-                  Open in App Store
+                  OPEN IN APP STORE
                 </a>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     )
   }
 
   if (!sessionReady && !error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
+      <div className="min-h-screen bg-hero-buttermilk flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="bg-white rounded-hero shadow-2xl p-10 max-w-md w-full"
+        >
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Verifying Reset Link...</h2>
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <h2 className="text-2xl font-anton font-black uppercase text-gray-900 mb-6 tracking-tight">VERIFYING RESET LINK...</h2>
+            <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-hero-orange"></div>
           </div>
-        </div>
+        </motion.div>
       </div>
     )
   }
 
   if (error && !sessionReady) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
+      <div className="min-h-screen bg-hero-buttermilk flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="bg-white rounded-hero shadow-2xl p-10 max-w-md w-full"
+        >
           <div className="text-center">
-            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
-              <svg className="h-8 w-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Invalid or Expired Link</h2>
-            <p className="text-gray-600 mb-6">{error}</p>
-            <p className="text-sm text-gray-500">Please request a new password reset link from the Hero Fitness app.</p>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5, type: "spring" }}
+              className="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-red-50 mb-6"
+            >
+              <XCircle className="h-10 w-10 text-red-500" />
+            </motion.div>
+            <h2 className="text-2xl font-anton font-black uppercase text-gray-900 mb-3 tracking-tight">INVALID OR EXPIRED LINK</h2>
+            <p className="text-gray-600 mb-6 text-lg">{error}</p>
+            <p className="text-gray-500">Please request a new password reset link from the HERO FITNESS app.</p>
           </div>
-        </div>
+        </motion.div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">HERO FITNESS</h1>
-          <p className="text-gray-600 mt-2">Reset Your Password</p>
+    <div className="min-h-screen bg-hero-buttermilk flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="bg-white rounded-hero shadow-2xl p-10 max-w-md w-full"
+      >
+        <div className="text-center mb-10">
+          <div className="flex justify-center mb-4">
+            <Image
+              src="/images/icon.png"
+              alt="Hero Fitness AI"
+              width={60}
+              height={60}
+              className="rounded-xl"
+            />
+          </div>
+          <h1 className="text-3xl font-anton font-black uppercase text-gray-900 tracking-tight mb-2">HERO FITNESS</h1>
+          <p className="text-gray-600 text-lg">Fitness that celebrates you</p>
+          <p className="text-gray-500 mt-4">Reset Your Password</p>
+          {isDevelopment && searchParams.get('dev') === 'true' && (
+            <div className="mt-4 px-3 py-2 bg-hero-yellow/20 border border-hero-yellow rounded-xl">
+              <p className="text-xs font-bold text-gray-700 uppercase tracking-wide">Development Mode</p>
+            </div>
+          )}
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <label htmlFor="password" className="block text-sm font-bold uppercase tracking-wide text-gray-700 mb-2">
               New Password
             </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition"
-              placeholder="Enter new password"
-              required
-              minLength={8}
-            />
-            <p className="mt-1 text-xs text-gray-500">Must be at least 8 characters with uppercase, lowercase & number</p>
-          </div>
+            <div className="relative">
+              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-hero-orange focus:border-transparent transition bg-gray-50 hover:bg-white"
+                placeholder="Enter new password"
+                required
+                minLength={6}
+              />
+            </div>
+            <p className="mt-2 text-xs text-gray-500">Minimum 6 characters</p>
+          </motion.div>
 
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <label htmlFor="confirmPassword" className="block text-sm font-bold uppercase tracking-wide text-gray-700 mb-2">
               Confirm Password
             </label>
-            <input
-              id="confirmPassword"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition"
-              placeholder="Confirm new password"
-              required
-            />
-          </div>
+            <div className="relative">
+              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <input
+                id="confirmPassword"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-hero-orange focus:border-transparent transition bg-gray-50 hover:bg-white"
+                placeholder="Confirm new password"
+                required
+              />
+            </div>
+          </motion.div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm flex items-center"
+            >
+              <AlertCircle className="h-4 w-4 mr-2 flex-shrink-0" />
               {error}
-            </div>
+            </motion.div>
           )}
 
-          <button
+          <motion.button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            whileHover={{ scale: loading ? 1 : 1.05 }}
+            whileTap={{ scale: loading ? 1 : 0.95 }}
+            className="w-full bg-hero-orange text-white px-6 py-4 rounded-2xl font-bold uppercase tracking-wide hover:bg-hero-tangerine transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Updating...' : 'Update Password'}
-          </button>
+            {loading ? 'UPDATING...' : 'UPDATE PASSWORD'}
+          </motion.button>
         </form>
 
-        <div className="mt-6 text-center">
+        <div className="mt-8 text-center">
           <p className="text-sm text-gray-600">
             Having trouble?{' '}
-            <a href="mailto:support@usehero.fit" className="text-blue-600 hover:underline">
+            <a href="mailto:hello@usehero.fit" className="text-hero-orange hover:text-hero-tangerine font-bold transition">
               Contact Support
             </a>
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }
@@ -230,11 +310,11 @@ function ResetPasswordContent() {
 export default function ResetPassword() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
+      <div className="min-h-screen bg-hero-buttermilk flex items-center justify-center p-4">
+        <div className="bg-white rounded-hero shadow-2xl p-10 max-w-md w-full">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Loading...</h2>
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <h2 className="text-2xl font-anton font-black uppercase text-gray-900 mb-6 tracking-tight">LOADING...</h2>
+            <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-hero-orange"></div>
           </div>
         </div>
       </div>
