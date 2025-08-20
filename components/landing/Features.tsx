@@ -3,51 +3,38 @@
 import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { Sparkles, Calendar, Camera, Clock, Moon, Heart } from 'lucide-react'
 import WaitlistModal from './WaitlistModal'
 
 const features = [
   {
     title: "GENTLE PROGRESS",
     description: "Build confidence with mindful movement that respects your body's needs and your life's demands",
-    icon: Sparkles,
-    bgColor: "bg-[#F58B44]", // Headspace orange
-    textColor: "text-white",
+    image: "/images/gentle-progress.png",
   },
   {
     title: "52-WEEK JOURNEY",
     description: "A full year of personalized workouts that adapt to your feedback, ensuring you're challenged but never overwhelmed",
-    icon: Calendar,
-    bgColor: "bg-[#52B6DE]", // Headspace sky blue
-    textColor: "text-white",
+    image: "/images/week-journey.png",
   },
   {
     title: "AI VISUALIZATION",
     description: "See your healthiest, happiest self—not pressure, but possibility. A gentle reminder of your potential",
-    icon: Camera,
-    bgColor: "bg-[#4E3BA0]", // Headspace purple
-    textColor: "text-white",
+    image: "/images/ai-visualization.png",
   },
   {
     title: "FLEXIBLE SCHEDULE",
     description: "Choose 1-7 days per week. Even one day makes a difference. 15-60 minute sessions that fit into real life",
-    icon: Clock,
-    bgColor: "bg-[#01A652]", // Headspace green
-    textColor: "text-white",
+    image: "/images/flexible-schedule.png",
   },
   {
     title: "REST DAY CELEBRATION",
     description: "Recovery is progress too. We encourage rest days because your wellness journey should enhance your life",
-    icon: Moon,
-    bgColor: "bg-[#FFCE00]", // Headspace yellow
-    textColor: "text-gray-900",
+    image: "/images/rest-day.png",
   },
   {
     title: "REAL SUPPORT",
     description: "Feeling tired? We'll suggest gentler options. Busy week? Shorter workouts that still count",
-    icon: Heart,
-    bgColor: "bg-[#F06E1D]", // Headspace tangerine
-    textColor: "text-white",
+    image: "/images/real-support.png",
   }
 ]
 
@@ -79,6 +66,8 @@ export default function Features() {
     }
   }, [])
 
+
+
   return (
     <section ref={sectionRef} className="py-24 bg-white relative overflow-hidden">
       {/* Background decoration */}
@@ -102,25 +91,171 @@ export default function Features() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group transform-gpu"
-              style={{ willChange: 'transform' }}
-            >
-              <div className={`relative ${feature.bgColor} rounded-3xl p-8 h-full transition-shadow duration-200 hover:shadow-xl hover:-translate-y-1`}>
-                <div className="relative z-10">
-                  <feature.icon className={`w-12 h-12 mb-4 ${feature.textColor}`} />
-                  <h3 className={`text-xl font-anton font-black uppercase mb-3 tracking-tight ${feature.textColor}`}>{feature.title}</h3>
-                  <p className={`leading-relaxed ${feature.textColor} opacity-90`}>{feature.description}</p>
+        {/* Masonry/Pinterest Style Layout */}
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+            {/* Left Column */}
+            <div className="space-y-6">
+              {/* GENTLE PROGRESS */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0 * 0.1 }}
+                className="group transform-gpu"
+                style={{ willChange: 'transform' }}
+              >
+                <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden h-40 transition-shadow duration-200 hover:shadow-lg hover:-translate-y-1">
+                  <div className="flex h-full">
+                    <div className="relative w-40 h-full flex-shrink-0">
+                      <Image
+                        src={features[0].image}
+                        alt={features[0].title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 p-6 flex flex-col justify-center">
+                      <h3 className="text-lg font-anton font-black uppercase mb-2 tracking-tight text-gray-900 leading-tight">{features[0].title}</h3>
+                      <p className="text-sm leading-relaxed text-gray-700">{features[0].description}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+
+              {/* AI VISUALIZATION */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 2 * 0.1 }}
+                className="group transform-gpu"
+                style={{ willChange: 'transform' }}
+              >
+                <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden h-40 transition-shadow duration-200 hover:shadow-lg hover:-translate-y-1">
+                  <div className="flex h-full">
+                    <div className="relative w-40 h-full flex-shrink-0">
+                      <Image
+                        src={features[2].image}
+                        alt={features[2].title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 p-6 flex flex-col justify-center">
+                      <h3 className="text-lg font-anton font-black uppercase mb-2 tracking-tight text-gray-900 leading-tight">{features[2].title}</h3>
+                      <p className="text-sm leading-relaxed text-gray-700">{features[2].description}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* FLEXIBLE SCHEDULE */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 4 * 0.1 }}
+                className="group transform-gpu"
+                style={{ willChange: 'transform' }}
+              >
+                <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden h-40 transition-shadow duration-200 hover:shadow-lg hover:-translate-y-1">
+                  <div className="flex h-full">
+                    <div className="relative w-40 h-full flex-shrink-0">
+                      <Image
+                        src={features[3].image}
+                        alt={features[3].title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 p-6 flex flex-col justify-center">
+                      <h3 className="text-lg font-anton font-black uppercase mb-2 tracking-tight text-gray-900 leading-tight">{features[3].title}</h3>
+                      <p className="text-sm leading-relaxed text-gray-700">{features[3].description}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Column */}
+            <div className="space-y-6">
+              {/* 52-WEEK JOURNEY */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 1 * 0.1 }}
+                className="group transform-gpu"
+                style={{ willChange: 'transform' }}
+              >
+                <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden h-40 transition-shadow duration-200 hover:shadow-lg hover:-translate-y-1">
+                  <div className="flex h-full">
+                    <div className="relative w-40 h-full flex-shrink-0">
+                      <Image
+                        src={features[1].image}
+                        alt={features[1].title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 p-6 flex flex-col justify-center">
+                      <h3 className="text-lg font-anton font-black uppercase mb-2 tracking-tight text-gray-900 leading-tight">{features[1].title}</h3>
+                      <p className="text-sm leading-relaxed text-gray-700">{features[1].description}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* REST DAY CELEBRATION */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 3 * 0.1 }}
+                className="group transform-gpu"
+                style={{ willChange: 'transform' }}
+              >
+                <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden h-40 transition-shadow duration-200 hover:shadow-lg hover:-translate-y-1">
+                  <div className="flex h-full">
+                    <div className="relative w-40 h-full flex-shrink-0">
+                      <Image
+                        src={features[4].image}
+                        alt={features[4].title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 p-6 flex flex-col justify-center">
+                      <h3 className="text-lg font-anton font-black uppercase mb-2 tracking-tight text-gray-900 leading-tight">{features[4].title}</h3>
+                      <p className="text-sm leading-relaxed text-gray-700">{features[4].description}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* REAL SUPPORT */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 5 * 0.1 }}
+                className="group transform-gpu"
+                style={{ willChange: 'transform' }}
+              >
+                <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden h-40 transition-shadow duration-200 hover:shadow-lg hover:-translate-y-1">
+                  <div className="flex h-full">
+                    <div className="relative w-40 h-full flex-shrink-0">
+                      <Image
+                        src={features[5].image}
+                        alt={features[5].title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 p-6 flex flex-col justify-center">
+                      <h3 className="text-lg font-anton font-black uppercase mb-2 tracking-tight text-gray-900 leading-tight">{features[5].title}</h3>
+                      <p className="text-sm leading-relaxed text-gray-700">{features[5].description}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
         </div>
 
         {/* Bottom CTA */}

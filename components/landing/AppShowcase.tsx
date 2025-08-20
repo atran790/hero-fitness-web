@@ -14,7 +14,7 @@ const screens = [
   },
   {
     id: 2,
-    title: "TRACK PROGRESS",
+    title: "MAKE PROGRESS",
     description: "Follow structured workouts with clear video demonstrations and rep tracking",
     image: "/images/3.png",
     color: "from-purple-500 to-pink-600",
